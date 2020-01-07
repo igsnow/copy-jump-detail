@@ -1,0 +1,41 @@
+{
+  "manifest_version": 2,
+  "name": "AutoCopy",
+  "version": "1.0.0",
+  "author": "zhangzhiyong",
+  "description": "支持1688、淘宝、天猫",
+  "icons": {
+    "16": "sicon.png",
+    "48": "sicon.png",
+    "128": "sicon.png"
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "jquery-3.3.1.min.js",
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "jquery-3.3.1.min.js",
+        "content_script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_icon": "sicon.png",
+    "default_title": "Vcanbuy自动拷贝",
+    "default_popup": "popup.html"
+  }
+}
