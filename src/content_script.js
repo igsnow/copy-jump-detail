@@ -53,13 +53,14 @@ function hideNativeBtn() {
     ele2.style.display = 'none';
     ele3.style.display = 'none';
     nativeBtn.appendChild(btn);
+    jumpToVcb()
+}
 
+// 点击天猫详情页按钮跳转到vcanbuy
+function jumpToVcb() {
     let pageUrl = location.href;
-    // 谷歌插件的ID
-    let targetExtensionId = 'kgfophobpemegppibmgjaejdijffafgf';
-    // 点击复制链接按钮跳转到vcanbuy mall
     $('#toVcb').click(function () {
-        chrome.runtime.sendMessage(targetExtensionId, {
+        chrome.runtime.sendMessage({
             url: pageUrl
         }, function (res) {
             console.log(res);
