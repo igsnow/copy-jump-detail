@@ -1,13 +1,17 @@
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (location.host == 'test.mvcb.qilie.biz' && location.hash == '#/') {
-        if (request.cmd == 'src') {
+    if (location.host == 'detail.tmall.com') {
+        // 用户停留在天猫商品详情页，则执行脚本将"立即购买"、"加入购物车按钮"隐藏，同时添加复制链接按钮
+        hideNativeBtn()
+    } else if (location.host == 'test.mvcb.qilie.biz' && location.hash == '#/') {
+        // 在vcanbuy mall首页接受脚本消息执行复制链接到搜索框执行搜索操作
+        if (request.cmd == 'jump') {
             console.log(request.value);
             if (!request.value) return;
             handleCopy(request.value);
             sendResponse('jump消息已收到！');
         }
     } else {
-        console.log('不是mall首页')
+        console.log('不是脚本执行页面')
     }
 });
 
@@ -24,6 +28,34 @@ function handleCopy(val) {
     }
 }
 
+// 隐藏天猫商品详情页原生立即购买和加入购物车按钮
+function hideNativeBtn() {
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ hide btn');
+    let btn = document.createElement("div");
+    btn.setAttribute("id", "toVcb");
+    btn.style.background = "green";
+    btn.style.borderRadius = '2px';
+    btn.style.width = "178px";
+    btn.style.height = "38px";
+    btn.style.lineHeight = "38px";
+    btn.style.textAlign = 'center';
+    btn.style.fontFamily = 'Microsoft Yahei';
+    btn.style.fontSize = '16px';
+    btn.style.color = '#fff';
+    btn.style.zIndex = "9999999999";
+    btn.style.cursor = 'pointer';
+    btn.innerHTML = '复制链接';
+    // 隐藏原生按钮，插入自定义按钮
+    let nativeBtn = document.getElementsByClassName('tb-action tm-clear')[0];
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', nativeBtn);
+    let ele1 = document.getElementsByClassName('tb-btn-buy tb-btn-sku')[0];
+    let ele2 = document.getElementsByClassName('tb-btn-basket tb-btn-sku')[0];
+    let ele3 = document.getElementsByClassName('tb-btn-add tb-btn-sku tb-hidden')[0];
+    ele1.style.display = 'none';
+    ele2.style.display = 'none';
+    ele3.style.display = 'none';
+    nativeBtn.appendChild(btn)
+}
 
 
 

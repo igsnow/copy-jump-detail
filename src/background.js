@@ -40,7 +40,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
             tabs.forEach(function (item) {
                 if (item.id === tabId) {
                     chrome.tabs.sendMessage(tabId, {
-                        cmd: 'src',
+                        cmd: 'jump',
                         value: window.data && window.data[0] && window.data[0].url
                     });
                     // 当首页接收到的消息被消费后清空数据，便面回到首页后再次跳转
