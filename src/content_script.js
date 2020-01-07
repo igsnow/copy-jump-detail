@@ -30,7 +30,6 @@ function handleCopy(val) {
 
 // 隐藏天猫商品详情页原生立即购买和加入购物车按钮
 function hideNativeBtn() {
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ hide btn');
     let btn = document.createElement("div");
     btn.setAttribute("id", "toVcb");
     btn.style.background = "green";
@@ -47,14 +46,25 @@ function hideNativeBtn() {
     btn.innerHTML = '复制链接';
     // 隐藏原生按钮，插入自定义按钮
     let nativeBtn = document.getElementsByClassName('tb-action tm-clear')[0];
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', nativeBtn);
     let ele1 = document.getElementsByClassName('tb-btn-buy tb-btn-sku')[0];
     let ele2 = document.getElementsByClassName('tb-btn-basket tb-btn-sku')[0];
     let ele3 = document.getElementsByClassName('tb-btn-add tb-btn-sku tb-hidden')[0];
     ele1.style.display = 'none';
     ele2.style.display = 'none';
     ele3.style.display = 'none';
-    nativeBtn.appendChild(btn)
+    nativeBtn.appendChild(btn);
+
+    let pageUrl = location.href;
+    // 谷歌插件的ID
+    let targetExtensionId = 'kgfophobpemegppibmgjaejdijffafgf';
+    // 点击复制链接按钮跳转到vcanbuy mall
+    $('#toVcb').click(function () {
+        chrome.runtime.sendMessage(targetExtensionId, {
+            url: pageUrl
+        }, function (res) {
+            console.log(res);
+        });
+    })
 }
 
 
